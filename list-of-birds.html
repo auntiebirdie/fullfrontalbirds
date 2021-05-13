@@ -36,8 +36,8 @@ document.addEventListener("DOMContentLoaded", function() {
                           
                           if (currentOrder != bird.order) {
                             currentOrder = bird.order;
-                            output += "</blockquote>";
-                            output += "<h3><strong>";
+                            output += `</blockquote>`;
+                            output += `<h3><strong>`;
                             
                             if (exposedBirds[bird.order.toLowerCase()]) {
                                 output += `<a href="https://fullfrontalbirds.tumblr.com/tagged/${bird.order.toLowerCase()}">${bird.order}</a>`;
@@ -46,13 +46,13 @@ document.addEventListener("DOMContentLoaded", function() {
                                 output += bird.order;
                             }
                             
-                            output += "</strong></h3>";
-                            output += "<blockquote>";
+                            output += `</h3></strong>`;
+                            output += `<blockquote>`;
                           }
                           
                           if (currentFamily != bird.family) {
                               currentFamily = bird.family;
-                              output += "<h4><strong>";
+                              output += `<h4><strong>`;
                               
                             if (exposedBirds[bird.family.split(' ').shift().toLowerCase()]) {
                                 output += `<a href="https://fullfrontalbirds.tumblr.com/tagged/${bird.family.split(' ').shift().toLowerCase()}">${bird.family}</a>`;
@@ -61,18 +61,18 @@ document.addEventListener("DOMContentLoaded", function() {
                                 output += bird.family;
                             }
                               
-                              output += "</strong></h4>";
+                              output += `</strong></h4>`;
                           }
                           
                           
                           if (exposedBirds[bird['scientific name'].toLowerCase()]) {
-                            output += `<a href="https://fullfrontalbirds.tumblr.com/tagged/${bird['scientific name'].toLowerCase()}">${bird['English name']} <em>(${bird['scientific name']})</em></a>`;
+                            output += `<a href="https://fullfrontalbirds.tumblr.com/tagged/${bird['scientific name'].toLowerCase()}">${bird['English name']} <em>(${bird['scientific name']})</a>`;
                           }
                           else {
-                            output += `${bird['English name']} <em>(${bird['scientific name']})</em>`;
+                            output += `${bird['English name']} <em>(${bird['scientific name']})`;
                           }
                           
-                          output += "<br>";
+                          output += `<br>`;
                       }
                       
                       container.innerHTML = output;

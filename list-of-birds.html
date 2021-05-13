@@ -6,8 +6,10 @@
 <script type="text/javascript">// <![CDATA[
 document.addEventListener("DOMContentLoaded", function() {
     fetch('https://raw.githubusercontent.com/seppukawaii/fullfrontalbirds/main/Clements-Checklist-v2019-August-2019.csv')
-      .then(function(response) {
-          return response.text();
+      .then(response => response.arrayBuffer())
+      .then(buffer => {
+        let decoder = new TextDecoder("iso-8859-1");
+        return decoder.decode(buffer);
       })
       .then(function (data) {
         var tagFetcher = new window.TumblrTags('fullfrontalbirds');
@@ -26,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
             Papa.parse(data,
               {
                   header : true,
+                  encoding : "utf-8",
                   complete : function (parsedData) {
                       var allBirds = parsedData.data;
                       var currentOrder = null;

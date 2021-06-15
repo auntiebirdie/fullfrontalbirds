@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             output += '<h3><strong>';
                             
                             if (exposedBirds[bird.order.toLowerCase()]) {
-                                output += `<a href="https://fullfrontalbirds.tumblr.com/tagged/${bird.order.toLowerCase()}">${bird.order}`;
+                                output += `<a href="https://fullfrontalbirds.tumblr.com/tagged/${bird.order.toLowerCase()}">${bird.order}</` + `a>`;
                             }
                             else {
                                 output += bird.order;

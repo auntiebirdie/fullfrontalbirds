@@ -21,9 +21,8 @@ function fetchPosts(page) {
                     for (var match of matches) {
                         var photographer = match[2].trim();
                         var website = match[1];
-                        var identifier = Buffer.from(match[1]).toString('base64');
 
-                        const ref = firestore.doc(`fullfrontalphotographers/${identifier}`);
+                        const ref = firestore.doc(`fullfrontalphotographers/${photographer.toLowerCase()}`);
                         const doc = await ref.get();
                         const data = doc.data();
 

@@ -1,0 +1,26 @@
+<div id="list-container">
+	<p>Loading&hellip;</p>
+</div>
+<script type="text/javascript">
+// <![CDATA[
+document.addEventListener("DOMContentLoaded", function() {
+	fetch('https://raw.githubusercontent.com/seppukawaii/fullfrontalbirds/main/data/photographers.json').then(response => response.json()).then(function(photographers) {
+			var container = document.getElementById('list-container');
+			var output = '';
+			for(var photographer of photographers) {
+				output += '<h4><strong>';
+				output += "<a target=\"_blank\" href=\"https://fullfrontalbirds.tumblr.com/tagged/" + encodeURI(photographer.name.toLowerCase()) + "\">";
+				output += photographer.name;
+				output += "<\/a>";
+				output += "<\/strong><\/h3>";
+
+				output += "<blockquote><ul>";
+				for (var i = 0, len = photographer.websites.length; i < len; i++) {
+					output += "<li><a target=\"_blank\" href=\"" + photographer.websites[i] + "\">" + photographer.websites[i] + "<\/a><\/li>";
+				}
+				output += "<\/ul><\/blockquote>";
+			}
+	});
+});
+// ]]>
+</script>

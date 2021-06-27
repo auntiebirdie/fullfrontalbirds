@@ -16,7 +16,20 @@ document.addEventListener("DOMContentLoaded", function() {
 
 				output += "<blockquote><ul>";
 				for (var i = 0, len = photographer.websites.length; i < len; i++) {
-					output += "<li><a target=\"_blank\" href=\"" + photographer.websites[i] + "\">" + photographer.websites[i] + "<\/a><\/li>";
+					var website = photographer.websites[i];
+					var domain = website.match(/.*\/\/(?:www.)?([^.]+)./);
+
+					output += "<li><a target=\"_blank\" href=\"" + website + "\">";
+				
+					switch (domain[1]) {
+						case "flickr":
+							output += "<img src=\"https://raw.githubusercontent.com/seppukawaii/fullfrontalbirds/main/img/" + domain[1] + ".png\">";
+							break;
+					}
+
+					output += website;
+					
+					output += "<\/a><\/li>";
 				}
 				output += "<\/ul><\/blockquote>";
 			}

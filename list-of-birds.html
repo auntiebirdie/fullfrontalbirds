@@ -1,90 +1,66 @@
 <div id="list-container">
-<p>Loading&hellip;</p>
+	<p>Loading&hellip;</p>
 </div>
 <script src="https://cdn.jsdelivr.net/gh/beije/tumblr-tags@master/src/tumblrTags.js" type="text/javascript"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js" type="text/javascript"></script>
-<script type="text/javascript">// <![CDATA[
+<script type="text/javascript">
+// <![CDATA[
 document.addEventListener("DOMContentLoaded", function() {
-    fetch('https://raw.githubusercontent.com/seppukawaii/fullfrontalbirds/main/Clements-Checklist-v2019-August-2019.csv')
-      .then(response => response.arrayBuffer())
-      .then(buffer => {
-        let decoder = new TextDecoder("iso-8859-1");
-        return decoder.decode(buffer);
-      })
-      .then(function (data) {
-        var tagFetcher = new window.TumblrTags('fullfrontalbirds');
-
-        tagFetcher.on(
-          'ready',
-          function(tags) {
-            var container = document.getElementById('list-container');
-            var exposedBirds = {};
-            var output = '';
-
-            for (var i in tags) {
-              exposedBirds[tags[i].tag.toLowerCase()] = tags[i].hits;
-            }
-            
-            Papa.parse(data,
-              {
-                  header : true,
-                  encoding : "utf-8",
-                  complete : function (parsedData) {
-                      var allBirds = parsedData.data;
-                      var currentOrder = null;
-                      var currentFamily = null;
-                      
-                      for (var i = 0, len = allBirds.length; i < len - 1; i++) {
-                          var bird = allBirds[i];
-                          
-                          if (currentOrder != bird.order) {
-                            currentOrder = bird.order;
-                            output += '</' + 'blockquote>';
-                            output += '<h3><strong>';
-                            
-                            if (exposedBirds[bird.order.toLowerCase()]) {
-                                output += `<a href="https://fullfrontalbirds.tumblr.com/tagged/${bird.order.toLowerCase()}">${bird.order}</` + `a>`;
-                            }
-                            else {
-                                output += bird.order;
-                            }
-                            
-                            output += '</' + 'strong></' + 'h3>';
-                            output += '<blockquote>';
-                          }
-                          
-                          if (currentFamily != bird.family) {
-                              currentFamily = bird.family;
-                              output += '<h4><strong>';
-                              
-                            if (exposedBirds[bird.family.split(' ').shift().toLowerCase()]) {
-                                output += `<a href="https://fullfrontalbirds.tumblr.com/tagged/${bird.family.split(' ').shift().toLowerCase()}">${bird.family}</` + 'a>';
-                            }
-                            else {
-                                output += bird.family;
-                            }
-                              
-                              output += '</' + 'strong></' + 'h4>';
-                          }
-                          
-                          
-                          if (exposedBirds[bird['scientific name'].toLowerCase()]) {
-                            output += `<a href="https://fullfrontalbirds.tumblr.com/tagged/${bird['scientific name'].toLowerCase()}">${bird['English name']} <em>(${bird['scientific name']})</` + 'em></' + 'a>';
-                          }
-                          else {
-                            output += `${bird['English name']} <em>(${bird['scientific name']})</` + 'em>';
-                          }
-                          
-                          output += '<br/>';
-                      }
-                      
-                      container.innerHTML = output;
-                  }
-              });
-          }
-        );
-        
-        tagFetcher.load();
-      });
-  });
-// ]]></script>
+	fetch('https://raw.githubusercontent.com/seppukawaii/fullfrontalbirds/main/allBirds.json').then(response => response.json()).then(function(allBirds) {
+		var tagFetcher = new window.TumblrTags('fullfrontalbirds');
+		tagFetcher.on('ready', function(tags) {
+			var container = document.getElementById('list-container');
+			var exposedBirds = {};
+			var output = '';
+			for(var i in tags) {
+				exposedBirds[tags[i].tag.toLowerCase()] = tags[i].hits;
+			}
+			for(var order in allBirds) {
+				var num = exposedBirds[order.toLowerCase()];
+				output += '<h3><strong>';
+				if(num > 0) {
+					output += '<a href="https://fullfrontalbirds.tumblr.com/tagged/' + encodeURI(order.toLowerCase()) + '">';
+					output += order;
+					output += ' (' + num + ')';
+					output += "<\/a>";
+				} else {
+					output += order;
+				}
+				output += "<\/strong><\/h3>";
+				output += '<blockquote>';
+				for(var family in allBirds[order]) {
+					var num = exposedBirds[family.toLowerCase()];
+					output += '<h4><strong>';
+					if(num > 0) {
+						output += '<a href="https://fullfrontalbirds.tumblr.com/tagged/' + encodeURI(family.toLowerCase()) + '">';
+						output += allBirds[order][family].display;
+						output += "<\/a>";
+					} else {
+						output += allBirds[order][family].display;
+					}
+					output += "<\/strong><\/h4>";
+					output += '<blockquote>';
+					for(var i in allBirds[order][family].children) {
+						var species = allBirds[order][family].children[i];
+						output += '<p>';
+						if(num > 0) {
+							output += '<a href="https://fullfrontalbirds.tumblr.com/tagged/' + encodeURI(species[1].toLowerCase()) + '">';
+							output += species[0];
+							output += ' <em>(' + species[1] + ')<\/em>';
+							output += "<\/a>";
+						} else {
+							output += species[0];
+							output += ' <em>(' + species[1] + ')<\/em>';
+						}
+						output += "<\/p>";
+					}
+					output += "<\/blockquote>";
+				}
+				output += "<\/blockquote>";
+			}
+			container.innerHTML = output;
+		});
+		tagFetcher.load();
+	});
+});
+// ]]>
+</script>

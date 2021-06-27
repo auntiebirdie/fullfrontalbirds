@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
 					output += '<blockquote>';
 					for(var i in allBirds[order][family].children) {
 						var species = allBirds[order][family].children[i];
+						var num = exposedBirds[species[1].toLowerCase()];
 						output += '<p>';
 						if(num > 0) {
 							output += '<a href="https://fullfrontalbirds.tumblr.com/tagged/' + encodeURI(species[1].toLowerCase()) + '">';

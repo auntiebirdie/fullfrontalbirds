@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
 				
 					switch (domain[1]) {
 						case "flickr":
-							output += "<img src=\"https://raw.githubusercontent.com/seppukawaii/fullfrontalbirds/main/img/" + domain[1] + ".png\">";
+							output += "<img src=\"https://raw.githubusercontent.com/seppukawaii/fullfrontalbirds/main/img/" + domain[1] + ".png\" style=\"display: inline-block;\">";
 							break;
 					}
 
@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", function() {
 				}
 				output += "<\/ul><\/blockquote>";
 			}
+		        container.innerHTML = output;
 	});
 });
 // ]]>

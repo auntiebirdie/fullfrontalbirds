@@ -1,0 +1,48 @@
+#bg {
+    background: url('https://freedesignfile.com/upload/2014/05/Hand-drawn-birds-seamless-pattern-vector-material.jpg');
+}
+
+.grid {
+    margin-top: 0px;
+}
+
+.grid article.logo {
+    background: #FFFFFF;
+    padding: 40px 0 20px;
+}
+
+.grid article {
+    padding: 0;
+}
+
+.grid .post-content, .grid .post-content:hover {
+    box-shadow: 0 0 0 transparent;
+}
+
+.top-bar {
+    z-index: 5;
+}
+
+.menu-item {
+    text-transform: uppercase;
+    padding: 0 1em;
+    line-height: 50px;
+}
+
+.bottom-nav a, .pagination a {
+    background: #fff;
+}
+
+.post-answer .question .post_media_photo {
+        border-radius: 0;
+    width: auto;
+    max-width: 100%;
+
+}
+
+ul li .brand-logo {
+    height: 32px;
+    width: 32px;
+    display: inline-block;
+    margin-left: -30px;
+}

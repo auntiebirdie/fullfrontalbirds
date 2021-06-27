@@ -7,7 +7,7 @@ var output = {};
 // The eBird/Clements Checklist of Birds of the World: v2019.
 // Downloaded from https://www.birds.cornell.edu/clementschecklist/download/ 
 
-fs.createReadStream('eBird_Taxonomy_v2019.csv')
+fs.createReadStream('data/eBird_Taxonomy_v2019.csv')
     .pipe(csv())
     .on('data', (row) => {
 	if (row['CATEGORY'] == 'species') {
@@ -29,5 +29,5 @@ fs.createReadStream('eBird_Taxonomy_v2019.csv')
 	}
     })
     .on('end', () => {
-        fs.writeFileSync('allBirds.json', JSON.stringify(output));
+        fs.writeFileSync('data/birds.json', JSON.stringify(output));
     });

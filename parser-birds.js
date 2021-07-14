@@ -25,7 +25,7 @@ fs.createReadStream('data/eBird_Taxonomy_v2019.csv')
             };
         }
 
-       output[order][family].children.push([row['PRIMARY_COM_NAME'], row['SCI_NAME']]);
+       output[order][family].children.push([row['PRIMARY_COM_NAME'], row['SCI_NAME'], row['SPECIES_CODE']]);
 	}
     })
     .on('end', () => {
